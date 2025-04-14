@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.RadioGroup;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -63,32 +64,26 @@ public class PedidoActivity extends AppCompatActivity {
                 txtInput.setError("Insira seu nome.");
                 return;
             }
+            Lanche lanche = null;
 
             if(checkedId == R.id.radioBtnLanche1){
                 Lanche hamburger = new Lanche("Hamburger", 25);
-                bundle.putString(EXTRA_NOME, nome);
-                bundle.putString(EXTRA_NOME_LANCHE, hamburger.getNome());
-                bundle.putInt(EXTRA_LANCHE_VALOR, hamburger.getValor());
-
-                intent.putExtras(bundle);
-
             }else if(checkedId == R.id.radioBtnLanche2){
                 Lanche brownie = new Lanche("Brownie", 10);
-                bundle.putString(EXTRA_NOME, nome);
-                bundle.putString(EXTRA_NOME_LANCHE, brownie.getNome());
-                bundle.putInt(EXTRA_LANCHE_VALOR, brownie.getValor());
-
-                intent.putExtras(bundle);
-
             } else if (checkedId == R.id.radioBtnLanche3) {
                 Lanche sushi = new Lanche("Sushi", 15);
-
-                bundle.putString(EXTRA_NOME, nome);
-                bundle.putString(EXTRA_NOME_LANCHE, sushi.getNome());
-                bundle.putInt(EXTRA_LANCHE_VALOR, sushi.getValor());
-
-                intent.putExtras(bundle);
             }
+            if (lanche != null) {
+                bundle.putString(EXTRA_NOME, nome);
+                bundle.putString(EXTRA_NOME_LANCHE, lanche.getNome());
+                bundle.putInt(EXTRA_LANCHE_VALOR, lanche.getValor());
+                intent.putExtras(bundle);
+                startActivity(intent);
+                finish();
+            } else {
+                Toast.makeText(this, "Selecione um lanche.", Toast.LENGTH_SHORT).show();
+            }
+
         });
     }
 
